@@ -2,22 +2,22 @@
 app.controller('cartController', function ($scope, $controller, baseService) {
 
     // 继承baseController
-    $controller('baseController', {$scope : $scope});
+    $controller('baseController', {$scope: $scope});
 
     // 查询购物车
     $scope.findCart = function () {
-        baseService.sendGet("/cart/findCart").then(function(response){
+        baseService.sendGet("/cart/findCart").then(function (response) {
             // 获取响应数据
             $scope.carts = response.data;
 
             // 定义json对象封装统计的数据
-            $scope.totalEntity = {totalNum : 0, totalMoney : 0};
+            $scope.totalEntity = {totalNum: 0, totalMoney: 0};
             // 迭代用户的购物车集合
-            for (var i = 0; i < $scope.carts.length; i++){
+            for (var i = 0; i < $scope.carts.length; i++) {
                 // 获取商家的购物车
                 var cart = $scope.carts[i];
                 // 迭代商家购物车中的商品
-                for (var j = 0; j < cart.orderItems.length; j++){
+                for (var j = 0; j < cart.orderItems.length; j++) {
                     // 获取购买的商品
                     var orderItem = cart.orderItems[j];
 
@@ -34,12 +34,36 @@ app.controller('cartController', function ($scope, $controller, baseService) {
     // 添加商品到购物车
     $scope.addCart = function (itemId, num) {
         baseService.sendGet("/cart/addCart?itemId="
-            + itemId + "&num=" + num).then(function(response){
+            + itemId + "&num=" + num).then(function (response) {
             // 获取响应数据
-            if (response.data){
+            if (response.data) {
                 // 重新查询购物车
                 $scope.findCart();
             }
         });
     };
+
+    $scope.allSelected = []; //全选数组
+    $scope.allChecked = false;  //默认全部选中为false
+
+    /**
+     * 店铺全选或者取消
+     * @param index
+     */
+    $scope.countTwo = function (index) {
+        console.log('商店索引ID：' + index);
+        var items = $scope.carts[index].orderItems;
+        var itemsLength = items.length;
+        if ($scope.carts[index].checked) {
+            for (var i = 0; i < itemsLength; i++) {
+                items[i].checked = false;
+            }
+        } else {
+            for (var i = 0; i < itemsLength; i++) {
+                items[i].checked = true;
+            }
+        }
+    };
+
+
 });
