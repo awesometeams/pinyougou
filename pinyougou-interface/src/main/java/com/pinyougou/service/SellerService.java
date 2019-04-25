@@ -24,7 +24,7 @@ public interface SellerService {
 	void deleteAll(Serializable[] ids);
 
 	/** 根据主键id查询 */
-	Seller findOne(Serializable id);
+	Seller findOne(String userId);
 
 	/** 查询全部 */
 	List<Seller> findAll();
@@ -34,4 +34,6 @@ public interface SellerService {
 
 	/** 商家审核 */
     void updateStatus(String sellerId, String status);
+
+
 }

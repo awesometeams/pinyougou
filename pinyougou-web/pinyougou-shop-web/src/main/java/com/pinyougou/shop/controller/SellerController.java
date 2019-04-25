@@ -5,10 +5,9 @@ import com.pinyougou.pojo.Seller;
 import com.pinyougou.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 商家控制器
@@ -36,6 +35,30 @@ public class SellerController {
             return true;
         }catch (Exception ex){
             ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @GetMapping("/findSeller")
+    public Seller findSeller(HttpServletRequest request) {
+        try {
+            String userId = request.getRemoteUser();
+           Seller seller =  sellerService.findOne(userId);
+            return seller;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // 修改
+    @PostMapping("/update")
+    public boolean update(@RequestBody Seller seller) {
+        try {
+            sellerService.update(seller);
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

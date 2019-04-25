@@ -42,9 +42,14 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
+    // 修改
     @Override
     public void update(Seller seller) {
-
+        try {
+            sellerMapper.updateByPrimaryKey(seller);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -57,10 +62,6 @@ public class SellerServiceImpl implements SellerService {
 
     }
 
-    @Override
-    public Seller findOne(Serializable id) {
-        return sellerMapper.selectByPrimaryKey(id);
-    }
 
     @Override
     public List<Seller> findAll() {
@@ -90,6 +91,15 @@ public class SellerServiceImpl implements SellerService {
             sellerMapper.updateStatus(sellerId, status);
         }catch (Exception ex){
             throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public Seller findOne(String userId) {
+        try {
+           return sellerMapper.selectByPrimaryKey(userId);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
