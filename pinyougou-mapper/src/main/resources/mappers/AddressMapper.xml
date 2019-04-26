@@ -5,4 +5,32 @@
 
 <mapper namespace="com.pinyougou.mapper.AddressMapper">
 
+	<select id="findProvinceList" resultType="map">
+		SELECT  provinceId id,province name  FROM tb_provinces
+	</select>
+
+    <select id="findCityList" resultType="map">
+      SELECT cityid id,city `name` FROM tb_cities WHERE provinceid=#{provinceId}
+    </select>
+
+    <select id="findTownList" resultType="map">
+      SELECT areaid id,`area` `name` FROM tb_areas WHERE cityid=#{cityId}
+    </select>
+
+    <update id="setDefaultAddress">
+      update tb_address set is_default = 1 where id=#{id}
+    </update>
+    <update id="setNoneDefaultAddress">
+        UPDATE tb_address set is_default=0 where id!=#{id} and user_id=#{userId}
+    </update>
+
+    <select id="findAddressList" resultType="address">
+        SELECT ad.*,pr.province, ci.city, ar.area FROM tb_address ad
+              LEFT JOIN tb_provinces pr ON ad.province_id=pr.provinceid
+              LEFT JOIN tb_cities ci on ad.city_id=ci.cityid
+              LEFT JOIN  tb_areas ar on ad.town_id=ar.areaid
+         WHERE user_id=#{userId}
+    </select>
+
+
 </mapper>

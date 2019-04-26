@@ -3,7 +3,9 @@ package com.pinyougou.user.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.common.util.HttpClientUtils;
+import com.pinyougou.mapper.AddressMapper;
 import com.pinyougou.mapper.UserMapper;
+import com.pinyougou.pojo.Address;
 import com.pinyougou.pojo.User;
 import com.pinyougou.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -29,6 +31,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private AddressMapper addressMapper;
+
+
     @Value("${sms.url}")
     private String smsUrl;
     @Value("${sms.signName}")
@@ -128,6 +135,58 @@ public class UserServiceImpl implements UserService {
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> findProvinceList() {
+        try {
+            return addressMapper.findProvinceList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @Override
+    public List<Map<String, Object>> findCityList(String provinceId) {
+        try {
+            return addressMapper.findCityList(provinceId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findTownList(String cityId) {
+        try {
+            return addressMapper.findTownList(cityId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateUserInfo(String username, User user) {
+        user.setUpdated(new Date());
+        user.setUsername(username);
+
+        userMapper.updateUserInfo(user);
+
+    }
+
+    @Override
+    public User showUserInfo(String username) {
+        try {
+            return userMapper.showUserInfo(username);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Address> findAddressList() {
+        return addressMapper.selectAll();
     }
 
 }
