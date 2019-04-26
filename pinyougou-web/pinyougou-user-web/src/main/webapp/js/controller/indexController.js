@@ -5,7 +5,17 @@ app.controller('indexController', function($scope, baseService){
         baseService.sendGet("/user/showName")
             .then(function(response){
                 $scope.loginName = response.data.loginName;
+
+                baseService.sendGet("/user/showUserInfo?username="+$scope.loginName).then(function (response) {
+                    $scope.userInfo=response.data;
+                });
+
             });
     };
+
+    $scope.init=function () {
+        $scope.showName();
+
+    }
 
 });

@@ -5,10 +5,12 @@ import com.pinyougou.mapper.AddressMapper;
 import com.pinyougou.pojo.Address;
 import com.pinyougou.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +39,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void delete(Serializable id) {
+
+        addressMapper.deleteByPrimaryKey(id);
 
     }
 
@@ -77,5 +81,37 @@ public class AddressServiceImpl implements AddressService {
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public void saveAddress(Address address,String userId) {
+        address.setUserId(userId);
+        address.setIsDefault("0");
+        address.setCreateDate(new Date());
+
+        addressMapper.insertSelective(address);
+
+    }
+
+    @Override
+    public void setDefaultAddress(Long id,String userId) {
+
+        try {
+            addressMapper.setDefaultAddress(id,userId);
+            addressMapper.setNoneDefaultAddress(id,userId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public List<Address> findAddressList(String userId) {
+        return  addressMapper.findAddressList(userId);
+    }
+
+    @Override
+    public void updateAddress(Address address) {
+        addressMapper.updateByPrimaryKeySelective(address);
     }
 }

@@ -55,6 +55,47 @@ public class User implements Serializable{
 	@Column(name="last_login_time")
     private Date lastLoginTime;
 
+
+
+	private String provinceId;
+	private String cityId;
+	private String townId;
+
+	
+	private String profession;
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(String provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getTownId() {
+        return townId;
+    }
+
+    public void setTownId(String townId) {
+        this.townId = townId;
+    }
+
     public Long getId() {
         return id;
     }

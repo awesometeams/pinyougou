@@ -1,9 +1,16 @@
 package com.pinyougou.user.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.pinyougou.pojo.Address;
 import com.pinyougou.pojo.User;
 import com.pinyougou.service.UserService;
+import com.sun.javafx.collections.MappingChange;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户控制器
@@ -46,5 +53,45 @@ public class UserController {
         }
         return false;
     }
+
+
+    @GetMapping("/findProvinceList")
+    public List<Map<String, Object>> findProvinceList(){
+        return userService.findProvinceList();
+    }
+    @GetMapping("/findCityList")
+    public List<Map<String, Object>> findCityList(String provinceId){
+        return userService.findCityList(provinceId);
+    }
+    @GetMapping("/findTownList")
+    public List<Map<String, Object>> findTownList(String cityId){
+        return userService.findTownList(cityId);
+    }
+
+    @PostMapping("/updateUserInfo")
+    public boolean updateUserInfo(@RequestBody User user, HttpServletRequest request){
+        try {
+            String username = request.getRemoteUser();
+            userService.updateUserInfo(username,user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+    }
+
+    @GetMapping("/showUserInfo")
+    public User showUserInfo(String username){
+        return userService.showUserInfo(username);
+    }
+
+    @GetMapping("/findAddressList")
+    public List<Address> findAddressList(){
+       return   userService.findAddressList();
+    }
+
+
 
 }

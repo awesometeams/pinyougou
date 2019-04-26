@@ -34,4 +34,11 @@ public interface AddressService {
 	/** 根据登录用户名获取收件地址列表 */
     List<Address> findAddressByUser(String userId);
 
+	void saveAddress(Address address,String userId);
+
+	void setDefaultAddress(Long id,String userId);
+
+	List<Address> findAddressList(String userId);
+
+    void updateAddress(Address address);
 }

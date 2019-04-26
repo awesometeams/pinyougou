@@ -1,5 +1,6 @@
 package com.pinyougou.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 import com.pinyougou.pojo.User;
@@ -11,6 +12,7 @@ import com.pinyougou.pojo.User;
  */
 public interface UserMapper extends Mapper<User>{
 
+    void updateUserInfo(User user);
 
-
+    User showUserInfo(String username);
 }
