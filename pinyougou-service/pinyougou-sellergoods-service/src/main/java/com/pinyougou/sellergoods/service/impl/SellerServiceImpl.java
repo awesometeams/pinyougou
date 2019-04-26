@@ -42,7 +42,7 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
-    // 修改
+    // 修改商家资料
     @Override
     public void update(Seller seller) {
         try {
@@ -94,10 +94,22 @@ public class SellerServiceImpl implements SellerService {
         }
     }
 
+    // 查询商家资料
     @Override
     public Seller findOne(String userId) {
         try {
            return sellerMapper.selectByPrimaryKey(userId);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // 修改商家密码
+    @Override
+    public void updatePassword(String newPassword, String userId) {
+        try {
+            sellerMapper.updatePassword(newPassword,userId);
+
         }catch (Exception e) {
             throw new RuntimeException(e);
         }

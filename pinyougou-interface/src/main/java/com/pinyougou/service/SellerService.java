@@ -2,8 +2,9 @@ package com.pinyougou.service;
 
 import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.pojo.Seller;
-import java.util.List;
+
 import java.io.Serializable;
+import java.util.List;
 /**
  * SellerService 服务接口
  * @date 2019-03-28 09:58:00
@@ -36,4 +37,6 @@ public interface SellerService {
     void updateStatus(String sellerId, String status);
 
 
+    // 修改商家密码
+    void updatePassword(String newPassword,String userId);
 }
