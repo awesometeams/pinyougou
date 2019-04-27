@@ -1,11 +1,16 @@
 package com.pinyougou.order.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pinyougou.cart.Cart;
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.common.util.IdWorker;
 import com.pinyougou.mapper.OrderItemMapper;
 import com.pinyougou.mapper.OrderMapper;
 import com.pinyougou.mapper.PayLogMapper;
+import com.pinyougou.pojo.Brand;
 import com.pinyougou.pojo.Order;
 import com.pinyougou.pojo.OrderItem;
 import com.pinyougou.pojo.PayLog;
@@ -172,9 +177,31 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    // {total: 100, rows : [{},{}]}
+    // {} : Map、实体类
+    // fastjson: 把java中的数据类型转化成 {}
     @Override
-    public List<Order> findByPage(Order order, int page, int rows) {
-        return null;
+    public PageResult findByPage(int page, int rows,String userId) {
+        PageInfo<Order> pageInfo = PageHelper.startPage(page, rows)
+                .doSelectPageInfo(new ISelect() {
+                    @Override
+                    public void doSelect() {
+                        orderMapper.findAll(userId);
+                    }
+                });
+        List<Order> list = pageInfo.getList();
+        int num=0;
+        for (Order order : list) {
+            List<OrderItem> orderItems = order.getOrderItems();
+            num+=orderItems.size();
+
+        }
+
+        PageResult pageResult=new PageResult();
+        pageResult.setRows(pageInfo.getList());
+        pageResult.setTotal(num);
+
+        return pageResult;
     }
 
     /** 从Redis数据库中获取支付日志 */
@@ -220,5 +247,13 @@ public class OrderServiceImpl implements OrderService {
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public void updateOederStatus(String outTradeNo) {
+        long outTradeNo1 = Long.parseLong(outTradeNo);
+
+
+        orderMapper.updateOederStatus(outTradeNo1);
     }
 }

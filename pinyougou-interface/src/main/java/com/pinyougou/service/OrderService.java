@@ -1,5 +1,6 @@
 package com.pinyougou.service;
 
+import com.pinyougou.common.pojo.PageResult;
 import com.pinyougou.pojo.Order;
 import com.pinyougou.pojo.PayLog;
 
@@ -31,11 +32,13 @@ public interface OrderService {
 	List<Order> findAll();
 
 	/** 多条件分页查询 */
-	List<Order> findByPage(Order order, int page, int rows);
+	PageResult findByPage(int page, int rows,String userId);
 
 	/** 从Redis数据库中获取支付日志 */
     PayLog findPayLogFromRedis(String userId);
 
     /** 支付成功，修改支付日志的状态、订单的状态 */
     void updatePayStatus(String outTradeNo, String transactionId);
+
+	void updateOederStatus(String outTradeNo);
 }

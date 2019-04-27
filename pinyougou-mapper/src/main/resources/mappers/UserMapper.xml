@@ -5,4 +5,42 @@
 
 <mapper namespace="com.pinyougou.mapper.UserMapper">
 
+	<update id="updateUserInfo">
+		UPDATE tb_user
+		<set>
+			<if test="nickName!=null and nickName!=''">
+				nick_name=#{nickName},
+			</if>
+			<if test="sex!=null and sex!=''">
+				sex=#{sex},
+			</if>
+			<if test="birthday!=null">
+				birthday=#{birthday},
+			</if>
+			<if test="provinceId!=null and provinceId!=''">
+				province_id=#{provinceId},
+			</if>
+			<if test="cityId!=null and cityId!=''">
+				city_id=#{cityId},
+			</if>
+			<if test="townId!=null and townId!=''">
+				town_id=#{townId},
+			</if>
+			<if test="profession!=null and profession!=''">
+				profession=#{profession},
+			</if>
+			<if test="updated!=null">
+				updated=#{updated},
+			</if>
+			<if test="headPic!=null and headPic!=''">
+				head_pic=#{headPic}
+			</if>
+		</set>
+		WHERE username=#{username}
+	</update>
+
+
+	<select id="showUserInfo" resultType="user">
+		SELECT * FROM tb_user where username=#{username}
+	</select>
 </mapper>

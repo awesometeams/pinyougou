@@ -4,16 +4,25 @@ app.controller('sellerController', function($scope, $controller, baseService){
     /** 指定继承baseController */
     $controller('baseController',{$scope:$scope});
 
-    /** 添加或修改 */
-    $scope.saveOrUpdate = function(){
+    $scope.findSeller = function () {
+        // 发送get请求
+        baseService.sendGet("/seller/findSeller").then(function (response) {
+            $scope.sellerinfo = response.data;
 
+        });
+    };
+
+
+    /** 修改 */
+    $scope.update = function() {
         /** 发送post请求 */
-        baseService.sendPost("/seller/save", $scope.seller)
-            .then(function(response){
-                if (response.data){
+        baseService.sendPost("/seller/update", $scope.sellerinfo)
+            .then(function (response) {
+                if (response.data) {
+                    alert("修改成功！");
                     /** 跳转到登录页面 */
-                    location.href = "/shoplogin.html";
-                }else{
+                    location.href = "/admin/seller.html";
+                } else {
                     alert("操作失败！");
                 }
             });
@@ -21,24 +30,20 @@ app.controller('sellerController', function($scope, $controller, baseService){
 
 
 
+    /** 添加或修改 */
+    $scope.saveOrUpdate = function() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /** 发送post请求 */
+        baseService.sendPost("/seller/save", $scope.seller)
+            .then(function (response) {
+                if (response.data) {
+                    /** 跳转到登录页面 */
+                    location.href = "/shoplogin.html";
+                } else {
+                    alert("操作失败！");
+                }
+            });
+    };
 
 
     /** 查询条件对象 */
@@ -78,3 +83,4 @@ app.controller('sellerController', function($scope, $controller, baseService){
         }
     };
 });
+

@@ -4,6 +4,8 @@ import tk.mybatis.mapper.common.Mapper;
 
 import com.pinyougou.pojo.Order;
 
+import java.util.List;
+
 /**
  * OrderMapper 数据访问接口
  * @date 2019-03-28 09:54:28
@@ -12,5 +14,8 @@ import com.pinyougou.pojo.Order;
 public interface OrderMapper extends Mapper<Order>{
 
 
+    List<Order> findAll(String userId);
 
+
+    void updateOederStatus(long outTradeNo1);
 }
