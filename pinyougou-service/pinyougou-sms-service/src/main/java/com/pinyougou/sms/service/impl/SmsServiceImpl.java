@@ -63,10 +63,8 @@ public class SmsServiceImpl implements SmsService {
             request.setTemplateCode(templateCode);
             // 可选:模板中的变量替换JSON串,如模板内容为: 验证码${number}，您正进行身份验证，打死不告诉别人！
             request.setTemplateParam(templateParam);
-
             // hint 此处可能会抛出异常，注意catch
             SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
-
             return "OK".equals(sendSmsResponse.getCode());
         }catch (Exception ex){
             throw new RuntimeException(ex);

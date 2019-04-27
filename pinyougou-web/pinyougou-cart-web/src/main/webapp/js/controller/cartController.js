@@ -20,7 +20,6 @@ app.controller('cartController', function ($scope, $controller, baseService) {
                 for (var j = 0; j < cart.orderItems.length; j++){
                     // 获取购买的商品
                     var orderItem = cart.orderItems[j];
-
                     // 统计购买数量
                     $scope.totalEntity.totalNum += orderItem.num;
                     // 统计总金额

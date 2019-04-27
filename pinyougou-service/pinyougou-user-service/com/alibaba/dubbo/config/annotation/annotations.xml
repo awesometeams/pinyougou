@@ -1,0 +1,5 @@
+<root>
+    <item name='com.alibaba.dubbo.config.annotation.Service'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>

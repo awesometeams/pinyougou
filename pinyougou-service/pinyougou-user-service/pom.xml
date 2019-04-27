@@ -9,6 +9,13 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>pinyougou-user-service</artifactId>
     <packaging>war</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <!-- 指定端口号 -->
