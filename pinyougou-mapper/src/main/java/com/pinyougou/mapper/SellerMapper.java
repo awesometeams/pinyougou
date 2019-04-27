@@ -21,4 +21,6 @@ public interface SellerMapper extends Mapper<Seller>{
     @Update("UPDATE tb_seller SET STATUS = #{status} WHERE seller_id = #{sellerId}")
     void updateStatus(@Param("sellerId") String sellerId,
                       @Param("status")String status);
+
+    void updatePassword(@Param("password") String newPassword, @Param("userId") String userId);
 }

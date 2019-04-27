@@ -5,7 +5,7 @@
 
 <mapper namespace="com.pinyougou.mapper.SellerMapper">
 	<!-- 多条件查询商家 -->
-	<select id="findAll" resultType="Seller">
+	<select id="findAll" resultType="com.pinyougou.pojo.Seller">
 		select * from tb_seller
 		<where>
 			<if test="status != null and status !=''">
@@ -19,4 +19,8 @@
 			</if>
 		</where>
 	</select>
+
+	<update id="updatePassword">
+		UPDATE tb_seller SET password = #{password} where seller_id = #{userId}
+	</update>
 </mapper>
